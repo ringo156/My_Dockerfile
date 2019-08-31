@@ -1,0 +1,35 @@
+version: "2"
+
+services:
+    linuxhost:
+        image: ubuntu1604:opencv2-gcc
+        stdin_open: true
+        tty: true
+        privileged: true
+        devices:
+          - "/dev/video0:/dev/video0:mwr"
+          - "/dev/video1:/dev/video1:mwr"
+          - "/dev/video2:/dev/video2:mwr"
+        volumes:
+          - /home/ringo/docker/mnt:/root/mnt/
+          - /tmp/.X11-unix/:/tmp/.X11-unix 
+        network_mode: "host"
+        environment:
+          - DISPLAY=${DISPLAY}
+
+    sshconnect:
+        image: ubuntu1604:opencv2-gcc
+        stdin_open: true
+        tty: true
+        privileged: true
+        devices:
+          - "/dev/video0:/dev/video0:mwr"
+          - "/dev/video1:/dev/video1:mwr"
+          - "/dev/video2:/dev/video2:mwr"
+        volumes:
+          - /home/ringo/docker/mnt:/root/mnt/
+          - $HOME/.Xauthority:/root/.Xauthority
+        network_mode: "host"
+        environment:
+          - DISPLAY=${DISPLAY}
+
